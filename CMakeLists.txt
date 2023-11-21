@@ -15,6 +15,6 @@ set(SOURCES
 add_library(${PROJECT_NAME} ${CA_LIBRARY_BUILD_TYPE} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/lib)
-target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/CandyAudio/src/include)
+target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/CandyAudio/include)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${portaudio})

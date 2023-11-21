@@ -1,5 +1,5 @@
-#include "include/AudioSource.hpp"
-#include "include/AudioData.hpp"
+#include "../include/AudioSource.hpp"
+#include "../include/AudioData.hpp"
 
 #include <portaudio.h>
 

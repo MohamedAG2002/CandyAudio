@@ -1,4 +1,4 @@
-#include "include/AudioDevice.hpp"
+#include "../include/AudioDevice.hpp"
 
 #include <portaudio.h>
 

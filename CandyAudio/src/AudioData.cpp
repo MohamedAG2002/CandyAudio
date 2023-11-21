@@ -1,4 +1,4 @@
-#include "include/AudioData.hpp"
+#include "../include/AudioData.hpp"
 
 #define DR_MP3_IMPLEMENTATION
 #include "../../lib/dr_libs/dr_mp3.h"
