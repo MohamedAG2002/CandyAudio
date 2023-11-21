@@ -4,10 +4,6 @@
 
 #include <portaudio.h>
 
-#include "../../lib/dr_libs/dr_mp3.h"
-#include "../../lib/dr_libs/dr_flac.h"
-#include "../../lib/dr_libs/dr_wav.h"
-
 #include <filesystem>
 
 namespace CandyAudio {

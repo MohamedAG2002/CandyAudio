@@ -1,3 +1,0 @@
-/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/candyaudio.dir
-/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/edit_cache.dir
-/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/rebuild_cache.dir

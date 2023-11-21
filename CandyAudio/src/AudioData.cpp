@@ -1,13 +1,13 @@
 #include "include/AudioData.hpp"
 
 #define DR_MP3_IMPLEMENTATION
-#include "../lib/dr_libs/dr_mp3.h"
+#include "../../lib/dr_libs/dr_mp3.h"
 
 #define DR_FLAC_IMPLEMENTATION
-#include "../lib/dr_libs/dr_flac.h"
+#include "../../lib/dr_libs/dr_flac.h"
 
 #define DR_WAV_IMPLEMENTATION
-#include "../lib/dr_libs/dr_wav.h"
+#include "../../lib/dr_libs/dr_wav.h"
 
 #include <filesystem>
 #include <iostream>
@@ -67,6 +67,24 @@ unsigned long AudioData::Read(unsigned long frameCount, float* buffer)
       break;
     default:
       return 0;
+      break;
+  }
+}
+    
+void AudioData::Rewind()
+{
+  switch (m_Type) 
+  {
+    case AudioType::MP3:
+      drmp3_seek_to_pcm_frame(&m_Mp3, 0);
+      break;
+    case AudioType::WAV:
+      drwav_seek_to_pcm_frame(&m_Wav, 0);
+      break;
+    case AudioType::FLAC:
+      drflac_seek_to_pcm_frame(&m_Flac, 0);
+      break;
+    default:
       break;
   }
 }

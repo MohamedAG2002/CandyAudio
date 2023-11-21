@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../lib/dr_libs/dr_mp3.h"
-#include "../../lib/dr_libs/dr_flac.h"
-#include "../../lib/dr_libs/dr_wav.h"
+#include "../../../lib/dr_libs/dr_mp3.h"
+#include "../../../lib/dr_libs/dr_flac.h"
+#include "../../../lib/dr_libs/dr_wav.h"
 
 #include <filesystem>
 
@@ -15,7 +15,12 @@ class AudioData
     ~AudioData();
 
   public:
+    // Read the frames of the audio clip
     unsigned long Read(unsigned long frameCount, float* buffer);
+    
+    // Start the audio clip from the very beginning 
+    void Rewind(); 
+
     const int GetChannels();
     const int GetSampleRate();
 

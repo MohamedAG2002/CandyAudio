@@ -35,6 +35,7 @@ void AudioSource::Play()
     return;
 
   InitPAStream();
+
   m_IsPlaying = true;
   m_IsStopped = false;
 }
@@ -46,6 +47,8 @@ void AudioSource::Stop()
     return;
   
   int err = Pa_CloseStream(m_Stream);
+  m_Data->Rewind();
+  
   m_IsStopped = true;
   m_IsPlaying = false;
 
