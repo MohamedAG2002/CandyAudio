@@ -4,7 +4,7 @@ project(candyaudio)
 
 find_library(portaudio portaudio REQUIRED)
 
-set(CA_LIBRARY_BUILD_TYPE STATIC)
+set(CA_LIBRARY_BUILD_TYPE SHARED)
 
 set(SOURCES 
   CandyAudio/src/AudioDevice.cpp
