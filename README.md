@@ -8,7 +8,7 @@ If you want to see some examples of the library in action, please head over to t
  - Flac
 
 # Dependencies
- - [PortAudio](https://github.com/PortAudio/portudio)
+ - [PortAudio](https://github.com/PortAudio/portaudio)
  - [dr_libs](https://github.com/mackron/dr_libs)
 
 # How To Build It? 
