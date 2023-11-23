@@ -31,7 +31,8 @@ AudioSource::~AudioSource()
 void AudioSource::Play()
 {
   // Only open a new stream if the previous stream was closed completely
-  if(!m_IsStopped)
+  // or the audio is not currently playing
+  if(!m_IsStopped || m_IsPlaying)
     return;
 
   InitPAStream();

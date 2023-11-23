@@ -1,13 +1,13 @@
 #include "../include/CandyAudio/AudioData.hpp"
 
 #define DR_MP3_IMPLEMENTATION
-#include "../lib/dr_libs/dr_mp3.h"
+#include "../include/CandyAudio/libs/dr_libs/dr_mp3.h"
 
 #define DR_FLAC_IMPLEMENTATION
-#include "../lib/dr_libs/dr_flac.h"
+#include "../include/CandyAudio/libs/dr_libs/dr_flac.h"
 
 #define DR_WAV_IMPLEMENTATION
-#include "../lib/dr_libs/dr_wav.h"
+#include "../include/CandyAudio/libs/dr_libs/dr_wav.h"
 
 #include <filesystem>
 #include <iostream>
