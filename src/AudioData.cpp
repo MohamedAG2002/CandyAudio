@@ -9,6 +9,8 @@
 #define DR_WAV_IMPLEMENTATION
 #include "../include/CandyAudio/libs/dr_libs/dr_wav.h"
 
+#include "../include/CandyAudio/libs/stb_vorbis/stb_vorbis.h"
+
 #include <filesystem>
 #include <iostream>
 
@@ -19,18 +21,27 @@ AudioData::AudioData(const std::filesystem::path& path)
 {
   if(m_Path.extension() == ".mp3" || m_Path.extension() == ".MP3") 
   {
-    drmp3_init_file(&m_Mp3, m_Path.c_str(), NULL);
     m_Type = AudioType::MP3; 
+    drmp3_init_file(&m_Mp3, m_Path.c_str(), NULL);
   }
   else if(m_Path.extension() == ".wav" || m_Path.extension() == ".WAV") 
   {
-    drwav_init_file(&m_Wav, m_Path.c_str(), NULL);
     m_Type = AudioType::WAV; 
+    drwav_init_file(&m_Wav, m_Path.c_str(), NULL);
   }
   else if(m_Path.extension() == ".flac" || m_Path.extension() == ".FLAC") 
   {
-    m_Flac = *drflac_open_file(m_Path.c_str(), NULL);
     m_Type = AudioType::FLAC; 
+    m_Flac = *drflac_open_file(m_Path.c_str(), NULL);
+  }
+  else if(m_Path.extension() == ".ogg" || m_Path.extension() == ".OGG") 
+  {
+    m_Type = AudioType::OGG; 
+    m_Ogg = stb_vorbis_open_filename(path.c_str(), 0, NULL);
+    m_OggInfo = stb_vorbis_get_info(m_Ogg);
+
+    if(m_Ogg == NULL)
+      std::cerr << "ERROR: File at \'" << path.c_str() << "\' failed to load\n";
   }
   else 
     std::cerr << "ERROR: File at \'" << path.c_str() << "\' has unknown extension\n";
@@ -49,6 +60,11 @@ AudioData::~AudioData()
     case AudioType::FLAC:
       drflac_close(&m_Flac);
       break;
+    case AudioType::OGG:
+      stb_vorbis_close(m_Ogg);
+      break;
+    default:
+      break;
   }
 }
 
@@ -65,6 +81,8 @@ unsigned long AudioData::Read(unsigned long frameCount, float* buffer)
     case AudioType::FLAC:
       return drflac_read_pcm_frames_f32(&m_Flac, frameCount, buffer);
       break;
+    case AudioType::OGG:
+      return stb_vorbis_get_samples_float_interleaved(m_Ogg, m_OggInfo.channels, buffer, frameCount * m_OggInfo.channels);
     default:
       return 0;
       break;
@@ -84,6 +102,9 @@ void AudioData::Rewind()
     case AudioType::FLAC:
       drflac_seek_to_pcm_frame(&m_Flac, 0);
       break;
+    case AudioType::OGG:
+      stb_vorbis_seek_start(m_Ogg);
+      break;
     default:
       break;
   }
@@ -101,6 +122,9 @@ const int AudioData::GetChannels()
       break;
     case AudioType::FLAC:
       return m_Flac.channels;
+      break;
+    case AudioType::OGG:
+      return m_OggInfo.channels;
       break;
     default:
       return 0;
@@ -120,6 +144,9 @@ const int AudioData::GetSampleRate()
       break;
     case AudioType::FLAC:
       return m_Flac.sampleRate;
+      break;
+    case AudioType::OGG:
+      return m_OggInfo.sample_rate;
       break;
     default:
       return 0;

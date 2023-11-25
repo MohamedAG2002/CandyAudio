@@ -20,6 +20,9 @@ class AudioSource
     void Pause();
     void Resume();
 
+    void SetVolume(float volume);
+    float GetVolume() { return m_Volume; } 
+    
     bool IsPlaying() { return m_IsPlaying; }
     bool IsFinished() { return m_IsFinished; } 
     bool IsPaused() { return m_IsPaused; }
@@ -27,8 +30,9 @@ class AudioSource
   private:
     PaStream* m_Stream; 
     PaStreamParameters m_StreamParam;
-    
+
     AudioData* m_Data;
+    float m_Volume;
     bool m_IsPlaying, m_IsFinished, m_IsPaused, m_IsStopped;
 
   private:

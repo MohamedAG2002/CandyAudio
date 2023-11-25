@@ -1,0 +1,7 @@
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/CandyAudio.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/edit_cache.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/rebuild_cache.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/list_install_components.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/install.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/install/local.dir
+/home/mohamed/Dev/Candy/CandyAudio/build/CMakeFiles/install/strip.dir

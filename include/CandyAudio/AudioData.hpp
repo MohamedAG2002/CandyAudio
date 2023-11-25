@@ -3,6 +3,7 @@
 #include "libs/dr_libs/dr_mp3.h"
 #include "libs/dr_libs/dr_wav.h"
 #include "libs/dr_libs/dr_flac.h"
+#include "libs/stb_vorbis/stb_vorbis.h"
 
 #include <filesystem>
 
@@ -29,7 +30,8 @@ class AudioData
     {
       MP3 = 0,
       WAV,
-      FLAC
+      FLAC,
+      OGG
     };
 
   private:
@@ -40,6 +42,9 @@ class AudioData
     drmp3 m_Mp3;
     drwav m_Wav;
     drflac m_Flac; 
+    
+    stb_vorbis* m_Ogg;
+    stb_vorbis_info m_OggInfo;   
 };
 
 }

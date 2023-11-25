@@ -10,11 +10,12 @@ set(CA_SOURCES
   src/AudioDevice.cpp
   src/AudioSource.cpp
   src/AudioData.cpp
+
+  src/libs/stb_vorbis/stb_vorbis.c
 )
   
 add_library(${PROJECT_NAME} ${CA_LIBRARY_BUILD_TYPE} ${CA_SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/libs/)
 target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/CandyAudio/include)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${portaudio})

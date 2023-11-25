@@ -1,0 +1,8 @@
+/usr/local/lib/libCandyAudio.so
+/usr/local/include/CandyAudio/AudioSource.hpp
+/usr/local/include/CandyAudio/AudioDevice.hpp
+/usr/local/include/CandyAudio/AudioData.hpp
+/usr/local/include/CandyAudio/libs/stb_vorbis/stb_vorbis.h
+/usr/local/include/CandyAudio/libs/dr_libs/dr_mp3.h
+/usr/local/include/CandyAudio/libs/dr_libs/dr_flac.h
+/usr/local/include/CandyAudio/libs/dr_libs/dr_wav.h

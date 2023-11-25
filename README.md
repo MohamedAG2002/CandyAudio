@@ -3,16 +3,18 @@ An audio library for playing and loading audio clips. Can be easily integrated i
 If you want to see some examples of the library in action, please head over to the examples section of this readme.
 
 # Currently supported audio formats:
- - MP3
- - WAV
+ - Mp3
+ - Wav
+ - Ogg
  - Flac
 
 # Dependencies
  - [PortAudio](https://github.com/PortAudio/portaudio)
  - [dr_libs](https://github.com/mackron/dr_libs)
+ - [stb_vorbis](https://github.com/nothings/stb/blob/master/stb_vorbis.c)
 
 # How To Build It? 
-As I'm sure you noticed, this project uses CMake as its build system. So if you hate CMake and can not stand it, then have fun trying to switch the build system for this library. Nonetheless, this project only has two dependencies as you can see in the section above. However, you only need to fetch PortAudio. As for dr_libs, it's already in the project and does not need to be configured. 
+As I'm sure you noticed, this project uses CMake as its build system. So if you hate CMake and can not stand it, then have fun trying to switch the build system for this library. Nonetheless, this project only has two dependencies as you can see in the section above. However, you only need to fetch PortAudio. As for dr_libs and stb_vorbis, they are already in the project and do not need to be configured. 
 
 Run the following commands to clone and build the library.
 

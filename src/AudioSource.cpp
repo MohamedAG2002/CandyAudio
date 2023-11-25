@@ -11,6 +11,8 @@ namespace CandyAudio {
 AudioSource::AudioSource(const std::filesystem::path& path)
 {
   m_Data = new AudioData(path);
+  m_Volume = 1.0f;
+
   m_IsPlaying = false;
   m_IsPaused = false;
   m_IsFinished = false;
@@ -87,6 +89,13 @@ void AudioSource::Resume()
     std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
 }
 
+void AudioSource::SetVolume(float volume)
+{
+  // Make sure to clamp the volume between 0 and 100
+  if(volume >= 0 || volume <= 100)
+    m_Volume = volume;
+}
+
 void AudioSource::InitPAStream()
 {
   // Stream params init 
@@ -96,7 +105,7 @@ void AudioSource::InitPAStream()
 
   m_StreamParam.channelCount = m_Data->GetChannels();
   m_StreamParam.sampleFormat = paFloat32;
-  m_StreamParam.suggestedLatency = Pa_GetDeviceInfo(m_StreamParam.device)->defaultLowOutputLatency;
+  m_StreamParam.suggestedLatency = Pa_GetDeviceInfo(m_StreamParam.device)->defaultHighOutputLatency;
   m_StreamParam.hostApiSpecificStreamInfo = NULL;
 
   // Open the stream
@@ -131,7 +140,10 @@ int AudioSource::Callback(const void* inputBuffer,
 {
   float* output = (float*)outputBuffer;
   AudioSource* src = (AudioSource*)userData;
-  unsigned long framesRead;
+  unsigned long framesRead; 
+
+  for(int i = 0; i < frameCount; i++)
+    output[i] *= src->m_Volume;
 
   framesRead = src->m_Data->Read(frameCount, output);
 
