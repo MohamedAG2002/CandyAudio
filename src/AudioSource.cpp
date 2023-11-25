@@ -4,6 +4,7 @@
 #include <portaudio.h>
 
 #include <filesystem>
+#include <math.h>
 #include <iostream>
 
 namespace CandyAudio {
@@ -11,7 +12,7 @@ namespace CandyAudio {
 AudioSource::AudioSource(const std::filesystem::path& path)
 {
   m_Data = new AudioData(path);
-  m_Volume = 1.0f;
+  m_Volume = 0.5f;
 
   m_IsPlaying = false;
   m_IsFinished = false;
@@ -121,7 +122,7 @@ void AudioSource::Resume()
 void AudioSource::SetVolume(float volume)
 {
   // Make sure to clamp the volume between 0 and 100
-  if(volume >= 0 || volume <= 100)
+  if(volume >= 0 && volume <= 100)
     m_Volume = volume;
 }
 
@@ -134,7 +135,7 @@ void AudioSource::InitPAStream()
 
   m_StreamParam.channelCount = m_Data->GetChannels();
   m_StreamParam.sampleFormat = paFloat32;
-  m_StreamParam.suggestedLatency = Pa_GetDeviceInfo(m_StreamParam.device)->defaultHighOutputLatency;
+  m_StreamParam.suggestedLatency = Pa_GetDeviceInfo(m_StreamParam.device)->defaultLowOutputLatency;
   m_StreamParam.hostApiSpecificStreamInfo = NULL;
 
   // Open the stream
@@ -143,7 +144,7 @@ void AudioSource::InitPAStream()
                           &m_StreamParam, // Output params
                           m_Data->GetSampleRate(), // Sample rate
                           1024, // Frames per buffer
-                          paNoFlag, // Flags
+                          paClipOff, // Flags
                           Callback, // Callback
                           this); // User data
   if(err != paNoError)
@@ -172,9 +173,15 @@ int AudioSource::Callback(const void* inputBuffer,
   unsigned long framesRead; 
 
   framesRead = src->m_Data->Read(frameCount, output);
-  
+
   for(int i = 0; i < frameCount; i++)
-    output[i] *= src->m_Volume;
+  {
+    *output++ *= src->m_Volume;
+    
+    // This line is only for stareo audio not for mono
+    if(src->m_StreamParam.channelCount > 1)
+      *output++ *= src->m_Volume;
+  }
 
   // The clip is completed if no more frames can be read 
   if(framesRead < frameCount)
