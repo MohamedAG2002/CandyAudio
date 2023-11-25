@@ -14,15 +14,13 @@ AudioSource::AudioSource(const std::filesystem::path& path)
   m_Volume = 1.0f;
 
   m_IsPlaying = false;
-  m_IsPaused = false;
   m_IsFinished = false;
-  m_IsStopped = true;
 }
 
 AudioSource::~AudioSource()
 {
   // No need to close the stream since it's already stopped
-  if(m_IsStopped)
+  if(m_IsFinished)
     return;
 
   int err = Pa_CloseStream(m_Stream);
@@ -31,62 +29,93 @@ AudioSource::~AudioSource()
 }
     
 void AudioSource::Play()
-{
-  // Only open a new stream if the previous stream was closed completely
-  // or the audio is not currently playing
-  if(!m_IsStopped || m_IsPlaying)
+{ 
+  // No need to play the stream if it's already playing
+  if(m_IsPlaying)
     return;
 
-  InitPAStream();
-
+  // Only initialize the stream at the beginning
+  if(!m_Stream)
+  {
+    InitPAStream();
+    
+    m_IsPlaying = true;
+    m_IsFinished = false;
+    
+    return;
+  }
+  
+  // If a stream was in fact initialized already, just rewind 
+  // the bytes from the beginning and start the stream if it was stopped 
+  m_Data->Rewind();
+ 
+  // Only when the stream was already stopped
+  if(m_IsFinished)
+  {
+    int err = Pa_StartStream(m_Stream); 
+    if(err != paNoError)
+      std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
+  }
+  // Only when the stream was not stopped. The stream will need to be stopped 
+  // and started again for the rewinding to work.
+  else 
+  {
+    int err = Pa_AbortStream(m_Stream); 
+    if(err != paNoError)
+      std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
+    
+    err = Pa_StartStream(m_Stream);
+    if(err != paNoError)
+      std::cerr << "ERROR: " << Pa_GetErrorText(err) << '\n';
+  }
+    
   m_IsPlaying = true;
-  m_IsStopped = false;
+  m_IsFinished = false;
 }
 
 void AudioSource::Stop()
 {
-  // Stream already stopped
-  if(m_IsStopped)
+  // Stream already finished
+  if(m_IsFinished)
     return;
-  
-  int err = Pa_CloseStream(m_Stream);
-  m_Data->Rewind();
-  
-  m_IsStopped = true;
-  m_IsPlaying = false;
 
+  int err = Pa_AbortStream(m_Stream); 
   if(err != paNoError)
-    std::cerr << "ERROR: " << Pa_GetErrorText(err) << '\n';
+    std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
+ 
+  m_IsPlaying = false;
+  m_IsFinished = true;
 }
 
 void AudioSource::Pause()
 {
-  // Audio is already paused or stopped
-  if(Pa_IsStreamStopped(m_Stream) == 1 || m_IsStopped)
+  // Audio is already paused
+  if(!m_IsPlaying)
     return;
   
   // Aborting the stream only stops the audio processing 
   // which can be picked up again once the stream stops. 
   // Essentially, giving the illusion of pause and resume.
   int err = Pa_AbortStream(m_Stream); 
-  m_IsPaused = true;
-  
   if(err != paNoError)
     std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
+  
+  m_IsPlaying = false;
 }
 
 void AudioSource::Resume()
 {
   // Audio is already playing or stopped 
-  if(!m_IsPaused || m_IsStopped)
+  if(m_IsPlaying)
     return;
  
   // Restart the stream from it left off
   int err = Pa_StartStream(m_Stream); 
-  m_IsPaused = false;
-  
   if(err != paNoError)
     std::cerr << "ERROR: " << Pa_GetErrorText(err) << std::endl;
+  
+  m_IsPlaying = true;
+  m_IsFinished = false;
 }
 
 void AudioSource::SetVolume(float volume)
@@ -132,27 +161,24 @@ void AudioSource::InitPAStream()
 }
 
 int AudioSource::Callback(const void* inputBuffer,
-                        void* outputBuffer,
-                        unsigned long frameCount,
-                        const PaStreamCallbackTimeInfo* timeInfo,
-                        PaStreamCallbackFlags flags,
-                        void* userData)
+                          void* outputBuffer,
+                          unsigned long frameCount,
+                          const PaStreamCallbackTimeInfo* timeInfo,
+                          PaStreamCallbackFlags flags,
+                          void* userData)
 {
   float* output = (float*)outputBuffer;
   AudioSource* src = (AudioSource*)userData;
   unsigned long framesRead; 
 
+  framesRead = src->m_Data->Read(frameCount, output);
+  
   for(int i = 0; i < frameCount; i++)
     output[i] *= src->m_Volume;
 
-  framesRead = src->m_Data->Read(frameCount, output);
-
   // The clip is completed if no more frames can be read 
   if(framesRead < frameCount)
-  {
-    src->m_IsFinished = true;
     return paComplete;
-  }
 
   return paContinue;
 }
