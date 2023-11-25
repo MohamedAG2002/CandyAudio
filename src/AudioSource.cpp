@@ -12,7 +12,7 @@ namespace CandyAudio {
 AudioSource::AudioSource(const std::filesystem::path& path)
 {
   m_Data = new AudioData(path);
-  m_Volume = 0.5f;
+  m_Volume = 1.0f;
 
   m_IsPlaying = false;
   m_IsFinished = false;
@@ -121,9 +121,22 @@ void AudioSource::Resume()
 
 void AudioSource::SetVolume(float volume)
 {
-  // Make sure to clamp the volume between 0 and 100
-  if(volume >= 0 && volume <= 100)
-    m_Volume = volume;
+  float oldRange = 100.0f - 0.0f; // Max - Min
+  float newRange = 1.0f - 0.0f; // Max - Min
+  float newValue = (((volume - 0.0f) * newRange) / oldRange) + 0.0f;
+
+  if(newValue >= 0.0f && newValue <= 1.0f)
+    m_Volume = newValue;
+
+  std::cout << "Internal Volume = " << m_Volume << '\n';
+}
+    
+float AudioSource::GetVolume()
+{
+  float oldRange = 1.0f - 0.0f; // Max - Min
+  float newRange = 100.0f - 0.0f; // Max - Min
+  
+  return (((m_Volume - 0.0f) * newRange) / oldRange) + 0.0f;
 }
 
 void AudioSource::InitPAStream()
