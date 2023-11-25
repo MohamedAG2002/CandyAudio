@@ -51,7 +51,7 @@ void AudioSource::Play()
   m_Data->Rewind();
  
   // Only when the stream was already stopped
-  if(m_IsFinished)
+  if(Pa_IsStreamStopped(m_Stream) == 1)
   {
     int err = Pa_StartStream(m_Stream); 
     if(err != paNoError)
