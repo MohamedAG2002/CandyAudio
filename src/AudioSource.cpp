@@ -127,8 +127,6 @@ void AudioSource::SetVolume(float volume)
 
   if(newValue >= 0.0f && newValue <= 1.0f)
     m_Volume = newValue;
-
-  std::cout << "Internal Volume = " << m_Volume << '\n';
 }
     
 float AudioSource::GetVolume()

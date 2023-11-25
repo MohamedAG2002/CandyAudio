@@ -31,7 +31,7 @@ You can also build this library either statically or dynamically by setting the 
 # How Does This Work?
 This library only consists of three classes: AudioData, AudioSource, and AudioDevice. Out of the three classes, you will only use two: AudioSource and AudioDevice. The AudioDevice class needs to be called before doing anything with the library. It is responsible for setting up PortAudio. If AudioDevice is not initialized at the beginning of your program, there can be and there will be errors. The program might just quit. Even though the library does handle all of the errors that can occur with PortAudio, it is still a consideration to have on your part. 
 
-Once the AudioDevice has been initialized, you can declare an AudioSource. The AudioSource is the main part. If you want to play a sound effect, use AudioSource. If you want to play music, use AudioSource. If you want to get rid of your debt, you can probably do other things but you can also use AudioSource. AudioSource's constructor takes a path to the audio clip you want to play. Although extra functionality is planned in the future, you can only play, stop, pause, and resume the AudioSource currently. Here's an example: 
+Once the AudioDevice has been initialized, you can declare an AudioSource. The AudioSource is the main part. If you want to play a sound effect, use AudioSource. If you want to play music, use AudioSource. If you want to get rid of your debt, you can probably do other things but you can also use AudioSource. AudioSource's constructor takes a path to the audio clip you want to play. Although extra functionality is planned in the future, you can only play, stop, pause, resume, and control the volume of the AudioSource currently. Here's an example: 
 
 ~~~c++
 #include <CandyAudio/AudioDevice.hpp>
@@ -45,6 +45,15 @@ int main()
     // Takes the valid path, takes the audio clip there, checks 
     // what type it is (mp3, flac, wav, etc), and plays it
     CandyAudio::AudioSource song("assets/audio/never_gonna_give_you_up.mp3");
+
+    // Set the volume of the audio source. Give it a value between 0 and 100.
+    // Giving it a 0 will make the audio source completely silent, while giving it 
+    // 100 will make it blast in your ear.
+    song.SetVolume(42);
+
+    // Returns the volume that is assigned currently to the audio clip. Again, 
+    // from a range between 0 and 100.
+    float volume = song.GetVolume();
 
     // Start the audio clip immedietaly. Although you can delay this and put 
     // it anywhere
