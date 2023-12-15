@@ -1,5 +1,5 @@
-#include "../include/CandyAudio/AudioSource.hpp"
-#include "../include/CandyAudio/AudioData.hpp"
+#include "WonderAudio/AudioSource.hpp"
+#include "WonderAudio/AudioData.hpp"
 
 #include <portaudio.h>
 
@@ -7,7 +7,7 @@
 #include <math.h>
 #include <iostream>
 
-namespace CandyAudio {
+namespace WonderAudio {
 
 AudioSource::AudioSource(const std::filesystem::path& path)
 {

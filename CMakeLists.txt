@@ -1,22 +1,28 @@
 cmake_minimum_required(VERSION 3.27)
 
-project(CandyAudio)
+project(WonderAudio)
 
 find_library(portaudio portaudio REQUIRED)
 
-set(CA_LIBRARY_BUILD_TYPE SHARED)
+set(WA_LIBRARY_BUILD_TYPE SHARED)
 
-set(CA_SOURCES 
+set(WA_SOURCES 
   src/AudioDevice.cpp
   src/AudioSource.cpp
   src/AudioData.cpp
+)
 
-  src/libs/stb_vorbis/stb_vorbis.c
+set(WA_LIBS_SOURCES
+  libs/stb_vorbis/stb_vorbis.c
+  libs/dr_libs/dr_mp3.cpp
+  libs/dr_libs/dr_flac.cpp
+  libs/dr_libs/dr_wav.cpp
 )
   
-add_library(${PROJECT_NAME} ${CA_LIBRARY_BUILD_TYPE} ${CA_SOURCES})
+add_library(${PROJECT_NAME} ${WA_LIBRARY_BUILD_TYPE} ${WA_SOURCES})
 
-target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/CandyAudio/include)
+target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} BEFORE PUBLIC ${CMAKE_SOURCE_DIR}/libs)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${portaudio})
 

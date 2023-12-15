@@ -1,13 +1,13 @@
 #pragma once
 
-#include "libs/dr_libs/dr_mp3.h"
-#include "libs/dr_libs/dr_wav.h"
-#include "libs/dr_libs/dr_flac.h"
-#include "libs/stb_vorbis/stb_vorbis.h"
+#include "dr_libs/dr_mp3.h"
+#include "dr_libs/dr_wav.h"
+#include "dr_libs/dr_flac.h"
+#include "stb_vorbis/stb_vorbis.h"
 
 #include <filesystem>
 
-namespace CandyAudio {
+namespace WonderAudio {
  
 class AudioData
 {

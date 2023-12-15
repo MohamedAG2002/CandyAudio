@@ -6,7 +6,7 @@
 
 #include <filesystem>
 
-namespace CandyAudio {
+namespace WonderAudio {
  
 class AudioSource
 {

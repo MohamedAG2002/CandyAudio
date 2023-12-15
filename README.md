@@ -1,4 +1,4 @@
-# CandyAudio
+# WonderAudio
 An audio library for playing and loading audio clips. Can be easily integrated into any project. Just follow the build instructions and use it as you please. 
 If you want to see some examples of the library in action, please head over to the examples section of this readme.
 
@@ -19,14 +19,14 @@ As I'm sure you noticed, this project uses CMake as its build system. So if you 
 Run the following commands to clone and build the library.
 
 ~~~
-git clone https://github.com/MohamedAG2002/CandyAudio.git
+git clone https://github.com/MohamedAG2002/WonderAudio.git
 mkdir build
 cd build
 cmake ..
 cmake --build . 
 ~~~
 
-You can also build this library either statically or dynamically by setting the `CA_LIBRARY_BUILD_TYPE` variable. You can do that by replacing the `cmake ..` by `cmake -DCA_LIBRARY_BUILD_TYPE=SHARED/STATIC`. Obviously, only pick one out of the two options. Either `SHARED` or `STATIC`.
+You can also build this library either statically or dynamically by setting the `WA_LIBRARY_BUILD_TYPE` variable. You can do that by replacing the `cmake ..` by `cmake -DWA_LIBRARY_BUILD_TYPE=SHARED/STATIC`. Obviously, only pick one out of the two options. Either `SHARED` or `STATIC`.
 
 # How Does This Work?
 This library only consists of three classes: AudioData, AudioSource, and AudioDevice. Out of the three classes, you will only use two: AudioSource and AudioDevice. The AudioDevice class needs to be called before doing anything with the library. It is responsible for setting up PortAudio. If AudioDevice is not initialized at the beginning of your program, there can be and there will be errors. The program might just quit. Even though the library does handle all of the errors that can occur with PortAudio, it is still a consideration to have on your part. 
@@ -34,17 +34,17 @@ This library only consists of three classes: AudioData, AudioSource, and AudioDe
 Once the AudioDevice has been initialized, you can declare an AudioSource. The AudioSource is the main part. If you want to play a sound effect, use AudioSource. If you want to play music, use AudioSource. If you want to get rid of your debt, you can probably do other things but you can also use AudioSource. AudioSource's constructor takes a path to the audio clip you want to play. Although extra functionality is planned in the future, you can only play, stop, pause, resume, and control the volume of the AudioSource currently. Here's an example: 
 
 ~~~c++
-#include <CandyAudio/AudioDevice.hpp>
-#include <CandyAudio/AudioSource.hpp>
+#include <WonderAudio/AudioDevice.hpp>
+#include <WonderAudio/AudioSource.hpp>
 
 int main()
 {
     // Make sure to initialize an AudioDevice first.
-    CandyAudio::AudioDevice device;
+    WonderAudio::AudioDevice device;
 
     // Takes the valid path, takes the audio clip there, checks 
     // what type it is (mp3, flac, wav, etc), and plays it
-    CandyAudio::AudioSource song("assets/audio/never_gonna_give_you_up.mp3");
+    WonderAudio::AudioSource song("assets/audio/never_gonna_give_you_up.mp3");
 
     // Set the volume of the audio source. Give it a value between 0 and 100.
     // Giving it a 0 will make the audio source completely silent, while giving it 

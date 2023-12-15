@@ -1,10 +1,10 @@
-#include "../include/CandyAudio/AudioDevice.hpp"
+#include "WonderAudio/AudioDevice.hpp"
 
 #include <portaudio.h>
 
 #include <iostream>
 
-namespace CandyAudio {
+namespace WonderAudio {
  
 AudioDevice::AudioDevice()
 {

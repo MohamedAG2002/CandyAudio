@@ -1,20 +1,14 @@
-#include "../include/CandyAudio/AudioData.hpp"
+#include "WonderAudio/AudioData.hpp"
 
-#define DR_MP3_IMPLEMENTATION
-#include "../include/CandyAudio/libs/dr_libs/dr_mp3.h"
-
-#define DR_FLAC_IMPLEMENTATION
-#include "../include/CandyAudio/libs/dr_libs/dr_flac.h"
-
-#define DR_WAV_IMPLEMENTATION
-#include "../include/CandyAudio/libs/dr_libs/dr_wav.h"
-
-#include "../include/CandyAudio/libs/stb_vorbis/stb_vorbis.h"
+#include "dr_libs/dr_mp3.h"
+#include "dr_libs/dr_flac.h"
+#include "dr_libs/dr_wav.h"
+#include "stb_vorbis/stb_vorbis.h"
 
 #include <filesystem>
 #include <iostream>
 
-namespace CandyAudio {
+namespace WonderAudio {
 
 AudioData::AudioData(const std::filesystem::path& path)
   :m_Path(path)

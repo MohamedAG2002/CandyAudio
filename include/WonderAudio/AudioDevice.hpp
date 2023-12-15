@@ -2,7 +2,7 @@
 
 #include <portaudio.h>
 
-namespace CandyAudio {
+namespace WonderAudio {
  
 class AudioDevice
 {
