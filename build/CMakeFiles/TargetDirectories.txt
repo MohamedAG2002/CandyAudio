@@ -1,7 +1,0 @@
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/WonderAudio.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/edit_cache.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/rebuild_cache.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/list_install_components.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/install.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/install/local.dir
-/home/mohamed/Dev/C++/WonderAudio/build/CMakeFiles/install/strip.dir

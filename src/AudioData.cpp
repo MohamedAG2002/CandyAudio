@@ -1,8 +1,13 @@
 #include "WonderAudio/AudioData.hpp"
 
+#define DR_MP3_IMPLEMENTATION
 #include "dr_libs/dr_mp3.h"
-#include "dr_libs/dr_flac.h"
+
+#define DR_WAV_IMPLEMENTATION
 #include "dr_libs/dr_wav.h"
+
+#define DR_FLAC_IMPLEMENTATION
+#include "dr_libs/dr_flac.h"
 #include "stb_vorbis/stb_vorbis.h"
 
 #include <filesystem>

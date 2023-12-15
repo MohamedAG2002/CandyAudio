@@ -13,10 +13,7 @@ set(WA_SOURCES
 )
 
 set(WA_LIBS_SOURCES
-  libs/stb_vorbis/stb_vorbis.c
-  libs/dr_libs/dr_mp3.cpp
-  libs/dr_libs/dr_flac.cpp
-  libs/dr_libs/dr_wav.cpp
+  src/stb_vorbis/stb_vorbis.c
 )
   
 add_library(${PROJECT_NAME} ${WA_LIBRARY_BUILD_TYPE} ${WA_SOURCES})
